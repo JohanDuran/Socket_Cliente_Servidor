@@ -1,0 +1,21 @@
+Hola 
+Bienvenido a la
+Universidad de Costa Rica
+Facultad de
+Ingenieria
+Escuela de
+Computacion e Informatica
+Desarrollado por:
+Johan Duran  
+Kenneth Calvo
+Para el curso de
+Redes de computadoras
+Tarea programada 2
+Este archivo es
+Para generar respuestas al 
+Cliente
+Luego de
+Este mensaje
+Volveremos 
+Al inicio 
+Con un:

@@ -8,35 +8,42 @@
 import socket
 import sys
 from Tkinter import *
+import os
+import errno
+from time import sleep
+
 def conectarServidor(): 
 	# Creando un socket TCP/IP
 	sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-	 
 	# Conecta el socket en el puerto cuando el servidor esté escuchando
 	server_address = ('localhost', int(ContentPuerto.get()))
 	print >>sys.stderr, 'conectando a %s puerto %s' % server_address
-	sock.connect(server_address)
-
-	try: 
-	     
-	    # Enviando datos
-	    message = ContentMensaje.get()
-	    print >>sys.stderr, 'enviando "%s"' % message
-	    sock.sendall(message)
-	 
-	    # Buscando respuesta
-	    amount_received = 0
-	    amount_expected = len(message)
-	    data="" 
-	    while amount_received < amount_expected:
-	        data = data+sock.recv(19)
-	        amount_received += len(data)
-	        print >>sys.stderr, 'recibiendo "%s"' % data
-	 	ContentRespuestaServidor.set(data)
-	 	ContentMensaje.set("")
-	finally:
-	    print >>sys.stderr, 'cerrando socket'
-	    sock.close()
+	sock.settimeout(2)
+	try:
+		sock.connect(server_address)
+		try: 
+		     
+		    # Enviando datos
+		    message = ContentMensaje.get()
+		    print >>sys.stderr, 'enviando "%s"' % message
+		    sock.sendall(message)
+		 
+		    # Buscando respuesta
+		    amount_received = 0
+		    amount_expected = len(message)
+		    data="" 
+		    while amount_received < amount_expected:
+		        data = data+sock.recv(1000)
+		        amount_received += len(data)
+		        print >>sys.stderr, 'recibiendo "%s"' % data
+		 	ContentRespuestaServidor.set(data)
+		 	ContentMensaje.set("")
+		finally:
+		    print >>sys.stderr, 'cerrando socket'
+		    sock.close()
+	except socket.error,exc:
+		print "no se pudo conectar"
+		ContentRespuestaServidor.set("no se pudo conectar")
 
 #inicio de la interfaz grafica
 root = Tk()#indica en inicio de loop
@@ -50,7 +57,7 @@ root.title("Socket Cliente-Servidor Python")#titulo de la ventana
 root.geometry("500x450")#tamaño de la ventana
 root.config(bg = "#000066")#color azul de background
 
-separador1 = LabelFrame(root,height=30, bg="#16EE67", text="TP2 - Johan Durán & Kenneth Calvo - Universidad De Costa Rica")#crea un espacio - separador
+separador1 = LabelFrame(root,height=30, bg="#16EE67", text="ClIENTE - TP2 - Johan Durán & Kenneth Calvo - Universidad De Costa Rica")#crea un espacio - separador
 separador1.pack(fill="both")
 
 LabelPuerto = Label(root, text="Puerto")
