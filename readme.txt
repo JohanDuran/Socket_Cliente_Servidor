@@ -5,5 +5,3 @@ debe ejecutar los comandos en este orden y en terminales separadas.
 1. python Servidor.py
 2. python Cliente.py
 
-Para ejecutar el intermediario, deberá usar una tercera terminal.
-
